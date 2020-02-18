@@ -1,0 +1,24 @@
+---
+{{ $tagIndex := dict -}}
+{{- range $id, $services := $.Site.Data.oniontree.tagged -}}
+    {{- $letter := (substr $id 0 1 | upper) -}}
+	{{- $tag := dict $id (len (index $.Site.Data.oniontree.tagged $id)) -}}
+    {{- $tagIndex = merge $tagIndex (dict $letter ((index $tagIndex $letter) | append $tag)) -}}
+{{- end -}}
+title: "{{ .Name | title }}"
+date: {{ .Date }}
+---
+
+<h1>Tags</h1>
+
+{{ range $letter, $data := $tagIndex }}
+	<h3>{{ $letter }}</h3>
+
+	<p>
+        {{ range $tag := $data }}
+			{{ range $name, $cnt := $tag }}
+				<a href="/tags/{{ $name }}.html">{{ $name }}</a> <small class="muted">({{ $cnt }}&times;)</small>&nbsp;
+			{{ end }}
+        {{ end }}
+	</p>
+{{ end }}

@@ -1,0 +1,11 @@
+title: OnionTree
+languageCode: en-us
+theme: ot
+uglyURLs: true
+verboseLog: true
+disableKinds:
+  - taxonomy
+  - taxonomyTerm
+  - RSS
+  - sitemap
+taxonomies: []

@@ -1,0 +1,33 @@
+---
+{{ $version := dateFormat "2006.01.02.1504" .Date -}}
+date: {{ .Date }}
+version: {{ $version }}
+type: bookmarks
+---
+<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!-- This is an automatically generated file.
+     It will be read and overwritten.
+     DO NOT EDIT! -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>OnionTree Bookmarks</TITLE>
+<H1>OnionTree Bookmarks</H1>
+<DL>
+	<P><DT><H3>OnionTree {{ $version }}</H3>
+			<DL><P>
+        {{- range $id, $service := $.Site.Data.oniontree.unsorted -}}
+            {{- $tags := slice -}}
+            {{- range $tag, $services := $.Site.Data.oniontree.tagged -}}
+                {{- range $name, $content := $services -}}
+                    {{- if eq $name $id }}
+                        {{- $tags = $tags | append $tag -}}
+                    {{- end }}
+                {{- end -}}
+            {{- end -}}
+			{{ if eq (hugo.Environment) "onion" }}
+				<A HREF="http://onions53ehmf4q75.onion/services/{{ $id }}.html?{{ slicestr ($version | md5) 0 8 }}" TAGS="{{ delimit $tags "," }}">{{ index $service "name" }}</A>
+			{{ else }}
+				<A HREF="https://oniontree.org/services/{{ $id }}.html?{{ slicestr ($version | md5) 0 8 }}" TAGS="{{ delimit $tags "," }}">{{ index $service "name" }}</A>
+			{{ end }}
+        {{ end }}
+</DL>
+</DL>

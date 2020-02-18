@@ -1,0 +1,59 @@
+---
+{{ $serviceIndex := dict -}}
+{{- range $id, $service := $.Site.Data.oniontree.unsorted -}}
+    {{- $service = merge $service (dict "id" $id) -}}
+    {{- $tags := slice -}}
+    {{- range $tag, $services := $.Site.Data.oniontree.tagged -}}
+        {{- range $name, $content := $services -}}
+            {{- if eq $name $id }}
+                {{- $tags = $tags | append $tag -}}
+            {{- end }}
+        {{- end -}}
+    {{- end -}}
+    {{- $service = merge $service (dict "tags" $tags) -}}
+    {{- $letter := (substr (index $service "name") 0 1 | upper) -}}
+    {{ if eq (in $tags "dead") false }}
+        {{- $serviceIndex = merge $serviceIndex (dict $letter ((index $serviceIndex $letter) | append $service)) -}}
+    {{ end }}
+{{- end -}}
+date: {{ .Date }}
+---
+
+<h2>Welcome!</h2>
+
+<p>OnionTree is a repository of Tor hidden services. Use this site to find verified onion
+    addresses, PGP keys and other useful information.</p>
+
+<p>All data are open source, available in machine readable format.</p>
+
+<p><strong>Visiting often?</strong> Import <a href="/download.html">OnionTree Bookmarks</a>.</p>
+
+<h1 id="services">Services</h1>
+
+{{ range $letter, $services := $serviceIndex }}
+    <h3>{{ $letter }}</h3>
+
+    {{ range $services }}
+        <p>
+            <a href="/services/{{ index . "id" }}.html">{{ index . "name" }}</a>
+            {{ if (index . "tags") }}
+                <small class="muted">({{ delimit (index . "tags") ", " }})</small>
+            {{ else }}
+                &nbsp;
+            {{ end }}
+            {{ if (index $.Site.Data.news (index . "id")) }}
+                <a href="/services/{{ index . "id" }}.html#news">news</a>
+                &middot;
+            {{ end }}
+            {{ if (index . "urls") }}
+                <a href="/services/{{ index . "id" }}.html#urls">urls</a>
+            {{ end }}
+            {{ if and (index . "urls") (index . "public_keys") }}
+                &middot;
+            {{ end }}
+            {{ if (index . "public_keys") }}
+                <a href="/services/{{ index . "id" }}.html#pgp">keys</a>
+            {{ end }}
+        </p>
+    {{ end }}
+{{ end }}

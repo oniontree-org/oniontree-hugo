@@ -1,0 +1,36 @@
+---
+title: Download
+date: {{ .Date }}
+---
+
+<h1>Download</h1>
+
+<p>All data published on this site are open source. You can download a copy from <a href="https://github.com/onionltd/oniontree">a repository</a> hosted on GitHub.</p>
+
+<pre>$ git clone https://github.com/onionltd/oniontree</pre>
+
+<h3>Bookmarks</h3>
+
+<p>Contains circa <strong>200 services in total</strong>: <strong>20+ marketplaces</strong>, <strong>20+ vendor shops</strong>, <strong>10+ forums</strong>,
+	<strong>10+ search engines</strong>, <strong>30+ SecureDrops</strong> and much more in <strong>30+ different categories</strong>.</p>
+
+<p><strong>IMPORTANT:</strong> From version 2020-02-02 onwards, bookmarked URLs contain a version fingerprint. This fingerprint is used for analytic purposes to discover amount
+	of returning users. The fingerprint changes between releases but is always the same for each download.</p>
+
+<ul>
+	<li><a href="bookmarks.html" download>OnionTree Bookmarks {{ with $.Site.GetPage "/bookmarks.html" }}{{ .Params.version }}{{end}}</a></li>
+</ul>
+
+<h4>Importing in Tor Browser</h4>
+
+<ol class="link_list">
+	<li>Save <a href="/bookmarks.html" download>OnionTree Bookmarks</a> on your disk.</li>
+	<li>Press <code>CTRL</code> + <code>SHIFT</code> + <code>H</code> to open your library.</li>
+	<li>Click '<em>Import and Backup</em>' to expand available options and choose '<em>Import Bookmarks from HTML...</em>'.</li>
+	<li>Navigate to location where you previously saved bookmarks.html and select the file in order to import it.</li>
+	<li>That's it. There should be a new directory in '<em>Bookmarks Menu</em>'.</li>
+</ol>
+
+<p>If you are a Tails user, don't
+	forget to <a href="https://tails.boum.org/doc/first_steps/persistence/configure/index.en.html#index2h2">configure your persistent volume</a>
+	in order to preserve bookmarks between reboots.</p>

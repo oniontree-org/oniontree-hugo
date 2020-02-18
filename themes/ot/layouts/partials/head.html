@@ -1,0 +1,12 @@
+<head>
+    <meta charset="utf-8">
+    <title>{{ if $.Page.Title }}{{ $.Page.Title }} &ndash; {{ end }}{{ $.Site.Title }}</title>
+    <meta name="title" content="{{ if $.Page.Title }}{{ $.Page.Title }} &ndash; {{ end }}{{ $.Site.Title }}">
+    <meta name="description" content="{{ if $.Page.Description }}{{ $.Page.Description }}{{ else }}{{ $.Site.Params.description }}{{ end }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    {{ if eq (hugo.Environment) "clearnet" }}
+        {{ partial "twitter" . }}
+        {{ partial "facebook" . }}
+    {{ end }}
+</head>
