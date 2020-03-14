@@ -1,0 +1,24 @@
+---
+name: Build OnionTree
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-clearnet:
+    name: "Build [clearnet]"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install hugo
+        run: |
+          sudo apt install hugo
+
+      - name: Download OnionTree
+        run: |
+          make -C "$GITHUB_WORKSPACE" download
+
+      - name: Build site
+        run: |
+          make -C "$GITHUB_WORKSPACE" build
