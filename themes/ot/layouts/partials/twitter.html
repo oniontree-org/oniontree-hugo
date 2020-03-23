@@ -1,5 +1,5 @@
-<meta name="twitter:description" content="{{ $.Site.Params.description }}">
+<meta name="twitter:description" content="{{ if $.Page.Description }}{{ $.Page.Description }}{{ else }}{{ $.Site.Params.description }}{{ end }}">
 <meta name="twitter:image:src" content="{{ "/img/header.png" | absURL }}">
 <meta name="twitter:site" content="@onionltd">
 <meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:title" content="OnionTree">
+<meta property="twitter:title" content="{{ if $.Page.Title }}{{ $.Page.Title }} &ndash; {{ end }}{{ $.Site.Title }}">
