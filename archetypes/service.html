@@ -44,7 +44,7 @@ date: {{ .Date }}
             <p>
                 {{ index . "published" }}
                 &ndash;
-                {{ $url := .URL }}
+                {{ $url := (index . "url") }}
                 {{ if eq (hugo.Environment) "onion" }}
                     {{ if (index . "url_onion") }}
                         {{ $url = index . "url_onion" }}
