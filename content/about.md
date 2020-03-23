@@ -11,7 +11,7 @@ We want access to the data to be easy for humans and machines alike. All data is
 
 We want access to the data to remain unrestricted, that's why it's released in public domain. Other works, such as software, is available as a free software (free as in freedom). We hope that access to open data and free software will fuel novel ideas.
 
-This website is [generated](https://github.com/onionltd/oniontree-hugo) from data in the repository and is served by a web server. Use only the mirrors listed in [/mirrors.txt](/mirrors.txt). All other websites claiming to be OnionTree are fake.
+This website is [generated](https://github.com/oniontree-org/oniontree-hugo) from data in the repository and is served by a web server. Use only the mirrors listed in [/mirrors.txt](/mirrors.txt). All other websites claiming to be OnionTree are fake.
 
 ## How it works?
 
