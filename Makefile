@@ -1,7 +1,8 @@
 services = $(addprefix services/,$(patsubst %.yaml,%,$(notdir $(wildcard ./data/oniontree/unsorted/*.yaml))))
 tags = $(addprefix tags/,$(addsuffix .html,$(notdir $(wildcard ./data/oniontree/tagged/*))))
+HUGO_OUTPUT_PATH = ./public/
 HUGO_ENVIRONMENT = onion
-HUGO = hugo --environment "$(HUGO_ENVIRONMENT)"
+HUGO = hugo -c "./content" -d "$(HUGO_OUTPUT_PATH)" --environment "$(HUGO_ENVIRONMENT)"
 
 .PHONY: all
 all:
@@ -12,7 +13,6 @@ build: build/content/index \
 		build/content/services/index \
 		build/content/tags \
 		build/content/tags/index \
-		build/content/bookmarks \
 		build/content/download
 	@$(HUGO)
 
@@ -70,7 +70,7 @@ download:
 	&& rsync -avzh --include "*.yaml" --exclude ".*" --exclude "*.*" "$$dst/" data/oniontree/
 
 .PHONY: purge
-purge:
+purge: clean
 	$(RM) -r data/oniontree/*
 
 .PHONY: clean
