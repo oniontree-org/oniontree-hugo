@@ -10,15 +10,54 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: main
+
+      - uses: actions/checkout@v2
+        with:
+          repository: gohugoio/hugo
+          path: hugo
+
+      - uses: actions/checkout@v2
+        with:
+          repository: oniontree-org/oniontree-www-clearnet
+          path: www
+
+      - uses: actions/setup-go@v2-beta
+        with:
+          go-version: '1.14.0'
 
       - name: Install hugo
         run: |
-          sudo apt install hugo
+          go get && go build -o hugo main.go && ./hugo --help
+        working-directory: ./hugo
+
+      - name: Update PATH
+        run: |
+          echo ::set-env name=PATH::$PATH:$GITHUB_WORKSPACE/hugo
 
       - name: Download OnionTree
         run: |
-          make -C "$GITHUB_WORKSPACE" download
+          make download
+        working-directory: ./main
 
       - name: Build site
         run: |
-          make -C "$GITHUB_WORKSPACE" build
+          make build HUGO_ENVIRONMENT=clearnet HUGO_OUTPUT_PATH=$HUGO_OUTPUT_PATH
+        env:
+          HUGO_OUTPUT_PATH: "${{ github.workspace }}/www"
+        working-directory: ./main
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "autobuilder@oniontree.org"
+          git config --local user.name "OnionTreeAutoBuilder"
+          git add -A && git commit -m "Add latest changes"
+        working-directory: ./www
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          repository: oniontree-org/oniontree-www-clearnet
+          directory: ./www
