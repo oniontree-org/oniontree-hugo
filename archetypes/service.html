@@ -84,9 +84,9 @@ date: {{ .Date }}
         <li class="urls_url text-ellipsis">
             {{- if not $dead }}
                 {{- if eq (hugo.Environment) "clearnet" }}
-                    <img src="https://hxxpbeam.danwin1210.me/png/{{ . | urlquery }}" class="status_beam" alt="&bullet;">
+                    <img src="https://hxxpbeam.danwin1210.me/png/{{ $.Name | urlquery }}/{{ . | urlquery }}" class="status_beam" alt="&bullet;">
                 {{ else }}
-                    <img src="http://qf6ycc37agiwvunc757l4427guhdawqngjqs4bfn3kenwszpjnk53sqd.onion/png/{{ . | urlquery }}" class="status_beam" alt="&bullet;">
+                    <img src="http://qf6ycc37agiwvunc757l4427guhdawqngjqs4bfn3kenwszpjnk53sqd.onion/png/{{ $.Name | urlquery }}/{{ . | urlquery }}" class="status_beam" alt="&bullet;">
                 {{ end }}
             {{ else }}
                 <span class="status_beam muted">&bullet;</span>
