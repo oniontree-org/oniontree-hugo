@@ -41,21 +41,23 @@ date: {{ .Date }}
 
     <div>
         {{ range $news }}
-            <p>
-                {{ index . "published" }}
-                &ndash;
-                {{ $url := (index . "url") }}
-                {{ if eq (hugo.Environment) "onion" }}
-                    {{ if (index . "url_onion") }}
-                        {{ $url = index . "url_onion" }}
+            {{ $url := (index . "url") }}
+            {{ if eq (hugo.Environment) "onion" }}
+                {{ if (index . "url_onion") }}
+                    {{ $url = index . "url_onion" }}
+                {{ end }}
+            {{ end }}
+            {{ if $url }}
+                <p>
+                    {{ index . "published" }}
+                    &ndash;
+                    <a href="{{ $url }}" title="{{ index . "title" }}" target="_blank" referrerpolicy="no-referrer">{{ index . "title" }}</a>
+                    {{- if and (eq (hugo.Environment) "onion") (not (index . "url_onion")) }}
+                        <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
                     {{ end }}
-                {{ end }}
-                <a href="{{ $url }}" title="{{ index . "title" }}" target="_blank" referrerpolicy="no-referrer">{{ index . "title" }}</a>
-                {{- if and (eq (hugo.Environment) "onion") (not (index . "url_onion")) }}
-                    <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
-                {{ end }}
-                {{ if (index . "source") }}<small class="muted">via {{ index . "source" }}</small>{{ end }}
-            </p>
+                    {{ if (index . "source") }}<small class="muted">via {{ index . "source" }}</small>{{ end }}
+                </p>
+            {{ end }}
         {{ end }}
     </div>
 {{ end }}
