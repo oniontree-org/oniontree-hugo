@@ -3,21 +3,21 @@
 }
 
 #content {
-    padding:5px;
+    padding:0.5rem;
 }
 
 #content ul,ol {
-    line-height:2em;
+    line-height:2rem;
 }
 
 #content p {
     text-align:justify;
-    line-height:1.5em;
+    line-height:1.5rem;
 }
 
 #menu {
-    line-height:2.5em;
-    padding:5px;
+    line-height:2.5rem;
+    padding:0.5rem;
     display:flex;
     flex-direction:row;
     flex-wrap:wrap;
@@ -26,10 +26,10 @@
 
 #footer {
     display:flex;
-    height:2.5em;
-    line-height:2.5em;
-    padding:5px;
-    margin-bottom:5px;
+    height:2.5rem;
+    line-height:2.5rem;
+    padding:0.5rem;
+    margin-bottom:0.5rem;
 }
 
 #footer > div {
@@ -41,7 +41,7 @@
 }
 
 body {
-    font-size: 15px;
+    font-size:100%;
     font-family: sans-serif;
     color: #333;
     width: 55%;
@@ -85,11 +85,11 @@ pre {
 }
 
 .status_beam {
-    border-radius:2px;
-    margin-bottom:0.10em;
-    margin-right:0.25em;
-    width:6px;
-    height:6px;
+    border-radius:0.2rem;
+    margin-bottom:0.10rem;
+    margin-right:0.25rem;
+    width:0.4rem;
+    height:0.4rem;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -108,7 +108,7 @@ pre {
 }
 
 .communities {
-    padding-left:5px;
+    padding-left:0.5rem;
 }
 
 .communities_community {
@@ -116,7 +116,7 @@ pre {
 }
 
 .urls {
-    padding-left:5px;
+    padding-left:0.5rem;
 }
 
 .urls_url {
@@ -124,8 +124,8 @@ pre {
 }
 
 .public_key {
-    margin-bottom:1em;
-    line-height:1.8em;
+    margin-bottom:1rem;
+    line-height:2rem;
 }
 
 .muted {
@@ -139,7 +139,7 @@ pre {
 }
 
 .alert {
-    padding:5px;
+    padding:0.5rem;
 }
 
 .warning {
@@ -155,8 +155,8 @@ pre {
 }
 
 .menu_link {
-    padding-right:15px;
-    font-size:17px;
+    padding-right:1.2rem;
+    font-size:120%;
 }
 
 .clearnet_warning {
