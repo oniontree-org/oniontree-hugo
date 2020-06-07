@@ -5,7 +5,7 @@ date: 2020-03-03T18:00:12Z
 
 # About
 
-OnionTree is a repository of Tor hidden services. We aim to provide up-to-date, curated index of the most popular dark web services, and be as transparent about it as technology allows it.
+OnionTree is an open source repository of Tor hidden services. We aim to provide up-to-date, curated index of the most popular dark web services, and be as transparent about it as the technology allows it.
 
 We want access to the data to be easy for humans and machines alike. All data is stored in _YAML_ files. *YAML* can be easily read and written by both. The data is also available in _JSON_ via [API](/api.html).
 
