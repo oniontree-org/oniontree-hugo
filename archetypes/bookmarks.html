@@ -16,18 +16,25 @@ type: bookmarks
 			<DL><P>
         {{- range $id, $service := $.Site.Data.oniontree.unsorted -}}
             {{- $tags := slice -}}
+            {{- $isDead := false -}}
             {{- range $tag, $services := $.Site.Data.oniontree.tagged -}}
                 {{- range $name, $content := $services -}}
                     {{- if eq $name $id }}
+                        {{- if eq $tag "dead" -}}
+                            {{- $isDead = true -}}
+                        {{- end -}}
                         {{- $tags = $tags | append $tag -}}
                     {{- end }}
                 {{- end -}}
             {{- end -}}
-			{{ if eq (hugo.Environment) "onion" }}
-				<A HREF="http://onions53ehmf4q75.onion/services/{{ $id }}.html?{{ slicestr ($version | md5) 0 8 }}" TAGS="{{ delimit $tags "," }}">{{ index $service "name" }}</A>
-			{{ else }}
-				<A HREF="https://oniontree.org/services/{{ $id }}.html?{{ slicestr ($version | md5) 0 8 }}" TAGS="{{ delimit $tags "," }}">{{ index $service "name" }}</A>
-			{{ end }}
+
+            {{- if not $isDead -}}
+                {{ if eq (hugo.Environment) "onion" }}
+                    <A HREF="http://onions53ehmf4q75.onion/services/{{ $id }}.html?{{ slicestr ($version | md5) 0 8 }}" TAGS="{{ delimit $tags "," }}">{{ index $service "name" }}</A>
+                {{ else }}
+                    <A HREF="https://oniontree.org/services/{{ $id }}.html?{{ slicestr ($version | md5) 0 8 }}" TAGS="{{ delimit $tags "," }}">{{ index $service "name" }}</A>
+                {{ end }}
+            {{- end -}}
         {{ end }}
 </DL>
 </DL>
