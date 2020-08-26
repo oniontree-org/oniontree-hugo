@@ -6,22 +6,25 @@ on:
 
 jobs:
   build-clearnet:
-    name: "Build [clearnet]"
+    name: "clearnet site"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           path: main
+          persist-credentials: false
 
       - uses: actions/checkout@v2
         with:
           repository: gohugoio/hugo
           path: hugo
+          persist-credentials: false
 
       - uses: actions/checkout@v2
         with:
           repository: oniontree-org/oniontree-www-clearnet
           path: www
+          persist-credentials: false
 
       - uses: actions/setup-go@v2-beta
         with:
@@ -51,13 +54,73 @@ jobs:
       - name: Commit changes
         run: |
           git config --local user.email "autobuilder@oniontree.org"
-          git config --local user.name "OnionTreeAutoBuilder"
-          git add -A && git commit -m "Add latest changes"
+          git config --local user.name "OnionTree AutoBuilder"
+          git add -A && git commit --allow-empty -m "Add latest changes"
         working-directory: ./www
 
       - name: Push changes
         run: |
-          git push http://github-actions:$ACCESS_TOKEN@github.com/oniontree-org/oniontree-www-clearnet.git master
+          git push -f https://github-actions:$ACCESS_TOKEN@github.com/oniontree-org/oniontree-www-clearnet.git master
+        env:
+          ACCESS_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
+        working-directory: ./www
+
+  build-onion:
+    name: "onion site"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: main
+          persist-credentials: false
+
+      - uses: actions/checkout@v2
+        with:
+          repository: gohugoio/hugo
+          path: hugo
+          persist-credentials: false
+
+      - uses: actions/checkout@v2
+        with:
+          repository: oniontree-org/oniontree-www-onion
+          path: www
+          persist-credentials: false
+
+      - uses: actions/setup-go@v2-beta
+        with:
+          go-version: '1.14.0'
+
+      - name: Install hugo
+        run: |
+          go get && go build -o hugo main.go && ./hugo --help
+        working-directory: ./hugo
+
+      - name: Update PATH
+        run: |
+          echo ::set-env name=PATH::$PATH:$GITHUB_WORKSPACE/hugo
+
+      - name: Download OnionTree
+        run: |
+          make download
+        working-directory: ./main
+
+      - name: Build site
+        run: |
+          make build HUGO_ENVIRONMENT=onion HUGO_OUTPUT_PATH=$HUGO_OUTPUT_PATH
+        env:
+          HUGO_OUTPUT_PATH: "${{ github.workspace }}/www"
+        working-directory: ./main
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "autobuilder@oniontree.org"
+          git config --local user.name "OnionTree AutoBuilder"
+          git add -A && git commit --allow-empty -m "Add latest changes"
+        working-directory: ./www
+
+      - name: Push changes
+        run: |
+          git push -f https://github-actions:$ACCESS_TOKEN@github.com/oniontree-org/oniontree-www-onion.git master
         env:
           ACCESS_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
         working-directory: ./www
