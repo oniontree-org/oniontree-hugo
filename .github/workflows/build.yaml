@@ -56,8 +56,8 @@ jobs:
         working-directory: ./www
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          repository: oniontree-org/oniontree-www-clearnet
-          directory: ./www
+        run: |
+          git push http://github-actions:$ACCESS_TOKEN@github.com/oniontree-org/oniontree-www-clearnet.git master
+        env:
+          ACCESS_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
+        working-directory: ./www
