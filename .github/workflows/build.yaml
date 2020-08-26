@@ -3,6 +3,9 @@ name: Build OnionTree
 on:
   push:
     branches: [ master ]
+  repository_dispatch:
+    types:
+      - oniontree-updated
 
 jobs:
   build-clearnet:
