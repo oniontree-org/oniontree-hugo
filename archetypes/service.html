@@ -132,7 +132,7 @@ date: {{ .Date }}
                     {{ if (index . "url") }}
                         <a href="{{ $url }}" referrerpolicy="no-referrer">{{ index $community "name" }}</a>
                     {{ else }}
-                        {{ $url }}
+                        {{ index $community "name" }}
                     {{ end }}
                 {{ end }}
             </li>
