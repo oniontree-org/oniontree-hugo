@@ -47,6 +47,13 @@ jobs:
           make download
         working-directory: ./main
 
+      - name: Build bookmarks
+        run: |
+          make build/content/bookmarks HUGO_ENVIRONMENT=onion HUGO_OUTPUT_PATH=$HUGO_OUTPUT_PATH
+        env:
+          HUGO_OUTPUT_PATH: "${{ github.workspace }}/www"
+        working-directory: ./main
+
       - name: Build site
         run: |
           make build HUGO_ENVIRONMENT=clearnet HUGO_OUTPUT_PATH=$HUGO_OUTPUT_PATH
@@ -105,6 +112,13 @@ jobs:
       - name: Download OnionTree
         run: |
           make download
+        working-directory: ./main
+
+      - name: Build bookmarks
+        run: |
+          make build/content/bookmarks HUGO_ENVIRONMENT=onion HUGO_OUTPUT_PATH=$HUGO_OUTPUT_PATH
+        env:
+          HUGO_OUTPUT_PATH: "${{ github.workspace }}/www"
         working-directory: ./main
 
       - name: Build site
