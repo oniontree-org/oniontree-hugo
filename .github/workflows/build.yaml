@@ -116,6 +116,12 @@ jobs:
         run: |
           echo ::set-env name=PATH::$PATH:$GITHUB_WORKSPACE/hugo
 
+      - name: Import PGP private key
+        run: |
+          echo "$PRIVATE_KEY" | gpg --import
+        env:
+          PRIVATE_KEY: "${{ secrets.PRIVATE_KEY }}"
+
       - name: Download OnionTree
         run: |
           make download
@@ -135,11 +141,12 @@ jobs:
           HUGO_OUTPUT_PATH: "${{ github.workspace }}/www"
         working-directory: ./main
 
-      - name: Commit changes
+      - name: Commit and sign changes
         run: |
           git config --local user.email "autobuilder@oniontree.org"
           git config --local user.name "OnionTree AutoBuilder"
-          git add -A && git commit --allow-empty -m "Add latest changes"
+          git config --local user.signingkey 59AABDA7C3BB479B
+          git add -A && git commit -S --allow-empty -m "Add latest changes"
         working-directory: ./www
 
       - name: Push changes
