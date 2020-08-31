@@ -13,7 +13,8 @@ build: build/content/index \
 		build/content/services/index \
 		build/content/tags \
 		build/content/tags/index \
-		build/content/download
+		build/content/download \
+		build/content/news/index
 	@$(HUGO)
 
 .PHONY: build/content/index
@@ -33,6 +34,14 @@ services/%.html:
 build/content/services/index: services/_index.html
 services/_index.html:
 	@$(HUGO) new --kind services "$@"
+
+##
+### News
+##
+.PHONY: build/content/news/index
+build/content/news/index: news/_index.html
+news/_index.html:
+	@$(HUGO) new --kind news "$@"
 
 ##
 ### OnionTree Bookmarks
@@ -80,4 +89,5 @@ clean:
 	$(RM)    content/bookmarks.html
 	$(RM) -r content/services/
 	$(RM) -r content/tags/
+	$(RM) -r content/news/
 	$(RM) -r public/*
