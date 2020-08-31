@@ -53,17 +53,20 @@ date: {{ .Date }}
                     {{ $url = index . "url_onion" }}
                 {{ end }}
             {{ end }}
-            {{ if $url }}
-                <p>
-                    {{ index . "published" }}
-                    &ndash;
+
+            <p>
+                {{ index . "published" }}
+                &ndash;
+                {{ if $url }}
                     <a href="{{ $url }}" title="{{ index . "title" | htmlEscape }}" target="_blank" referrerpolicy="no-referrer">{{ index . "title" }}</a>
-                    {{- if and (eq (hugo.Environment) "onion") (not (index . "url_onion")) }}
-                        <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
-                    {{ end }}
-                    {{ if (index . "source") }}<small class="muted">via {{ index . "source" }}</small>{{ end }}
-                </p>
-            {{ end }}
+                {{ else }}
+                    <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ index . "title" }}</span>
+                {{ end }}
+                {{- if and (eq (hugo.Environment) "onion") (not (index . "url_onion")) }}
+                    <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
+                {{ end }}
+                {{ if (index . "source") }}<small class="muted">via {{ index . "source" }}</small>{{ end }}
+            </p>
         {{ end }}
     </div>
 {{ end }}
@@ -103,7 +106,7 @@ date: {{ .Date }}
                 <span class="muted">{{ . }}</span>
             {{ else }}
                 {{- if eq (hugo.Environment) "clearnet" }}
-                    <span>{{ . }}</span>
+                    <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ . }}</span>
                 {{ else }}
                     <a href="{{ . }}" referrerpolicy="no-referrer">{{ . }}</a>
                 {{ end }}
@@ -132,7 +135,7 @@ date: {{ .Date }}
                     {{ if (index . "url") }}
                         <a href="{{ $url }}" referrerpolicy="no-referrer">{{ index $community "name" }}</a>
                     {{ else }}
-                        {{ index $community "name" }}
+                        <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ index $community "name" }}</span>
                     {{ end }}
                 {{ end }}
             </li>

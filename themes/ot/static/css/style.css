@@ -132,6 +132,11 @@ pre {
     color:#777;
 }
 
+.disabled-onion-link:hover {
+    text-decoration:underline;
+    text-decoration-style:dotted;
+}
+
 .text-ellipsis {
     white-space: nowrap;
     overflow: hidden;
