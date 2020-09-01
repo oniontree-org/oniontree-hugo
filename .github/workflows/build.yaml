@@ -55,7 +55,7 @@ jobs:
 
       - name: Build bookmarks
         run: |
-          make build/content/bookmarks HUGO_ENVIRONMENT=onion HUGO_OUTPUT_PATH=$HUGO_OUTPUT_PATH
+          make build/content/bookmarks HUGO_ENVIRONMENT=clearnet HUGO_OUTPUT_PATH=$HUGO_OUTPUT_PATH
         env:
           HUGO_OUTPUT_PATH: "${{ github.workspace }}/www"
         working-directory: ./main
