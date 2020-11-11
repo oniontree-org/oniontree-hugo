@@ -1,3 +1,8 @@
+- url: https://blog.torproject.org/state-of-the-onion-2020
+  title: "You’re Invited: State of the Onion 2020"
+  published: 2020-11-10
+  source: Tor Blog
+
 - url_onion: http://vworp2mspe566cws.onion/to/dread/405c52133b
   title: 'Community Alert: deeponionweb is spreading phishing links.'
   published: 2020-10-29
