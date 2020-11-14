@@ -2,10 +2,14 @@
 <html lang="en">
 {{- partial "head.html" . -}}
 <body>
-{{- partial "menu.html" . -}}
-<div id="content">
+<header>
+    {{- partial "menu.html" . -}}
+</header>
+<section class="content">
     {{ .Content }}
-</div>
-{{- partial "footer.html" . -}}
+</section>
+<footer>
+    {{- partial "footer.html" . -}}
+</footer>
 </body>
 </html>
