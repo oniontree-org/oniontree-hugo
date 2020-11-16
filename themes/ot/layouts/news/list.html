@@ -11,13 +11,13 @@
     {{ range (.Paginate .RegularPagesRecursive).Pages }}
         <div class="post-card">
             <div class="thumbnail">
-                <img src="https://blog.torproject.org/sites/default/files/styles/full_width/public/image/main.png?itok=jvjZOlLW">
+                <img src="{{ .Params.image_header | safeURL }}">
             </div>
             <div class="post-content">
                 {{ if .Params.link }}
                 <a class="title" href="{{ .Params.link }}" title="{{ index .Title | htmlEscape }}" referrerpolicy="no-referrer">{{ index .Title }}</a>
                 {{ else }}
-                <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ index .Title }}</span>
+                <span class="title disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ index .Title }}</span>
                 {{ end }}
                 {{- if and (eq (hugo.Environment) "onion") (not .Params.link_onion) }}
                 <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
