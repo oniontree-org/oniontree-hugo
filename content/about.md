@@ -19,11 +19,11 @@ New data is discovered by traversing [Darknet Live](/services/darknetlive.html),
 
 All contributions are stored in a _Git_ repository and must be _PGP_ signed. Entire history of a file, including all changes is recorded and therefore publicly auditable.
 
-Services which support [Onion Mirror Guidelines](https://github.com/onionltd/go-omg/blob/master/spec.txt) are [updated automatically](https://github.com/onionltd/oniontree-omg-tools).
+Services which support [Onion Mirror Guidelines](https://github.com/onionltd/go-omg/blob/master/spec.txt) are [updated automatically](https://github.com/oniontree-org/service-mirrors-sync).
 
-[SecureDrop](/tags/securedrop.html) instances are [scraped](https://github.com/oniontree-org/securedrop-instances-sync) from official SecureDrop directory API.
+[SecureDrop](/tags/securedrop.html) instances are [scraped](https://github.com/oniontree-org/securedrop-instances-sync) from the official SecureDrop directory API.
 
-[Invidious](/services/invidious.html) instances are [scraped](https://github.com/oniontree-org/invidious-instances-sync) from official Invidious API.
+[Invidious](/services/invidious.html) instances are [scraped](https://github.com/oniontree-org/invidious-instances-sync) from the official Invidious API.
 
 ## Disclaimer
 
