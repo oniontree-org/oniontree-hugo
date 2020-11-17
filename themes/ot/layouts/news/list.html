@@ -29,15 +29,19 @@
         </div>
     {{ end }}
 
-    <div>
-        {{ if .Paginator.HasPrev }}
-            <a href="{{ .Paginator.Prev.URL }}">newer</a>
-        {{ end }}
+    <ul>
+        <li>
+            {{ if .Paginator.HasPrev }}
+                <a href="{{ .Paginator.Prev.URL }}">newer</a>
+            {{ end }}
+        </li>
 
-        {{ if .Paginator.HasNext }}
-            <a href="{{ .Paginator.Next.URL }}">older</a>
-        {{ end }}
-    </div>
+        <li>
+            {{ if .Paginator.HasNext }}
+                <a href="{{ .Paginator.Next.URL }}">older</a>
+            {{ end }}
+        </li>
+    </ul>
 </section>
 <footer>
     {{- partial "footer.html" . -}}
