@@ -16,7 +16,7 @@
     <p id="tags">
         Tags:
         {{ range (.GetTerms "tags") }}
-        <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>
+        <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
         {{ end }}
     </p>
     {{ end }}
@@ -49,7 +49,7 @@
             {{- if and (eq (hugo.Environment) "onion") (not $article.Params.link_onion) }}
                 <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
             {{ end }}
-            {{ if $article.Params.source }}<small class="muted">{{ dateFormat "Mon, 2 Jan 2006" $article.Date }} via {{ $article.Params.source }}</small>{{ end }}
+            {{ if $article.Params.source }}<small class="muted">on {{ dateFormat "Mon, 2 Jan 2006" $article.Date }} via {{ $article.Params.source }}</small>{{ end }}
         </p>
         {{ end }}
     </div>
