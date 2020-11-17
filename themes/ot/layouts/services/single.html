@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+{{- partial "head.html" . -}}
+<body>
+<header>
+    {{- partial "menu.html" . -}}
+</header>
+<section class="content">
+    <h1 id="name">{{ .Title }}</h1>
+
+    {{ if .Description }}
+        <p id="description">{{ .Description | markdownify }}</p>
+    {{ end }}
+
+    {{ if .Params.tags }}
+    <p id="tags">
+        Tags:
+        {{ range (.GetTerms "tags") }}
+        <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>
+        {{ end }}
+    </p>
+    {{ end }}
+
+    {{ $articles := slice }}
+    {{ range (.Site.Taxonomies.tags.Get .Params.id).Pages }}
+        {{ if eq .Type "news" }}
+            {{ $articles = $articles | append . }}
+        {{ end }}
+    {{ end }}
+
+    {{ if $articles }}
+    <h2 id="news"><a href="#news">Latest News</a></h2>
+
+    <div>
+        {{ range $i, $article := $articles }}
+            {{ $url := $article.Params.link }}
+            {{ if eq (hugo.Environment) "onion" }}
+                {{ if $article.Params.link_onion }}
+                    {{ $url = $article.Params.link_onion }}
+                {{ end }}
+            {{ end }}
+
+        <p>
+            {{ if $url }}
+                <a href="{{ $url }}" title="{{ $article.Title }}" target="_blank" referrerpolicy="no-referrer">{{ $article.Title }}</a>
+            {{ else }}
+                <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ $article.Title }}</span>
+            {{ end }}
+            {{- if and (eq (hugo.Environment) "onion") (not $article.Params.link_onion) }}
+                <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
+            {{ end }}
+            {{ if $article.Params.source }}<small class="muted">{{ dateFormat "Mon, 2 Jan 2006" $article.Date }} via {{ $article.Params.source }}</small>{{ end }}
+        </p>
+        {{ end }}
+    </div>
+    {{ end }}
+
+    <h2 id="urls"><a href="#urls">Verified URLs</a></h2>
+
+    {{ range .Params.alerts }}
+        {{ range $severity, $msg := . }}
+        <p class="alert {{ $severity }}"><strong>{{ $severity | upper }}:</strong> {{ $msg }}</p>
+        {{ end }}
+    {{ end }}
+
+    {{ $dead := false }}
+    {{ range .Params.tags }}
+        {{- if eq . "dead" }}
+            {{ $dead = true }}
+            <p class="alert warning"><strong>WARNING:</strong> This service has been tagged as <strong>dead</strong>.
+                This can happen for various reasons but it always conveys the same message: <em>you should stay away</em>.
+                By visiting any of the links below, you risk falling a victim to <strong>phishing</strong>.
+            </p>
+        {{ end }}
+    {{ end }}
+
+    <ul class="urls">
+        {{ range .Params.urls }}
+            <li class="urls_url text-ellipsis">
+                {{- if not $dead }}
+                    {{- if eq (hugo.Environment) "clearnet" }}
+                        <img src="https://hxxpbeam.danwin1210.me/png/{{ $.Params.id | urlquery }}/{{ . | urlquery }}" class="status_beam" alt="&bullet;">
+                    {{ else }}
+                        <img src="http://qf6ycc37agiwvunc757l4427guhdawqngjqs4bfn3kenwszpjnk53sqd.onion/png/{{ $.Params.id | urlquery }}/{{ . | urlquery }}" class="status_beam" alt="&bullet;">
+                    {{ end }}
+                {{ else }}
+                    <span class="status_beam muted">&bullet;</span>
+                {{ end }}
+                {{ if $dead }}
+                    <span class="muted">{{ . }}</span>
+                {{ else }}
+                    {{- if eq (hugo.Environment) "clearnet" }}
+                        <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ . }}</span>
+                    {{ else }}
+                        <a href="{{ . }}" referrerpolicy="no-referrer">{{ . }}</a>
+                    {{ end }}
+                {{ end }}
+            </li>
+        {{ end }}
+    </ul>
+
+    {{ if .Params.communities }}
+        <h2 id="communities"><a href="#communities">Communities</a></h2>
+
+        <ul class="communities">
+            {{- range $id, $community := .Params.communities -}}
+                <li class="communities_community">
+                    <img src="/img/{{ $id }}_icon.png" class="community_icon" title="{{ $.Title }} community at {{ $id | humanize }}" style="margin-right:0.1rem;">
+                    {{ $url := (index . "url") }}
+                    {{ if not $url }}
+                        {{ $url = index . "url_onion" }}
+                    {{ end }}
+                    {{ if eq (hugo.Environment) "onion" }}
+                        <a href="{{ $url }}" referrerpolicy="no-referrer">{{ index $community "name" }}</a>
+                    {{ if not (index . "url_onion") }}
+                        <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
+                    {{ end }}
+                    {{ else }}
+                    {{ if (index . "url") }}
+                    <a href="{{ $url }}" referrerpolicy="no-referrer">{{ index $community "name" }}</a>
+                    {{ else }}
+                    <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ index $community "name" }}</span>
+                    {{ end }}
+                    {{ end }}
+                </li>
+            {{ end }}
+        </ul>
+    {{ end }}
+
+    {{ if .Params.public_keys  }}
+        <h2 id="pgp"><a href="#pgp">PGP Keys</a></h2>
+
+        <div id="public_keys">
+            {{- range .Params.public_keys }}
+                {{ $pgpkey := resources.Get "keys/key.txt" | resources.ExecuteAsTemplate (printf "keys/%s.%s" (index . "id") "txt") (index . "value") }}
+                <div id="pgp-{{ index . "id" }}" class="public_key">
+                    <div>ID: <a href="{{ $pgpkey.RelPermalink }}">{{ index . "id" }}</a></div>
+                    <div class="text-ellipsis">Fingerprint: {{ index . "fingerprint" }}</div>
+                    <div>User ID: {{ index . "user_id" }}</div>
+                {{ if (index . "description") }}
+                    <div><em>{{ index . "description" }}</em></div>
+                {{ end }}
+            {{ end }}
+        </div>
+    {{ end }}
+
+</section>
+<footer>
+    {{- partial "footer.html" . -}}
+</footer>
+</body>
+</html>

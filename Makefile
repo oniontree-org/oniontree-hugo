@@ -25,8 +25,8 @@ _index.html:
 ### Services
 ##
 .PHONY: build/content/services
-build/content/services: $(addsuffix .html,$(services))
-services/%.html:
+build/content/services: $(addsuffix .md,$(services))
+services/%.md:
 	@$(HUGO) new --kind service "$@"
 
 .PHONY: build/content/services/index
