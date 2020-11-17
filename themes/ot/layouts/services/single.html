@@ -57,12 +57,6 @@
 
     <h2 id="urls"><a href="#urls">Verified URLs</a></h2>
 
-    {{ range .Params.alerts }}
-        {{ range $severity, $msg := . }}
-        <p class="alert {{ $severity }}"><strong>{{ $severity | upper }}:</strong> {{ $msg }}</p>
-        {{ end }}
-    {{ end }}
-
     {{ $dead := false }}
     {{ range .Params.tags }}
         {{- if eq . "dead" }}
