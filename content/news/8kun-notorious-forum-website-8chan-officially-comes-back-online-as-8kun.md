@@ -1,7 +1,7 @@
 ---
 title: Notorious forum website 8chan officially comes back online as '8kun'
 link: https://www.ctvnews.ca/sci-tech/notorious-forum-website-8chan-officially-comes-back-online-as-8kun-1.4668975
-published: 2019-11-04T00:00:00Z
+date: 2019-11-04T00:00:00Z
 source: CTV News
 tags:
 - 8kun
