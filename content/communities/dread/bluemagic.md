@@ -1,0 +1,6 @@
+---
+title: /d/Bluemagic
+link_onion: http://vworp2mspe566cws.onion/to/dread/3d84f72de9
+tags:
+  - bluemagic
+---

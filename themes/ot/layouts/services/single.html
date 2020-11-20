@@ -93,28 +93,33 @@
         {{ end }}
     </ul>
 
-    {{ if .Params.communities }}
+    {{ $articles := slice }}
+    {{ range where (.Site.Taxonomies.tags.Get .Params.id).Pages "Type" "communities" }}
+        {{ $articles = $articles | append . }}
+    {{ end }}
+
+    {{ if $articles }}
         <h2 id="communities"><a href="#communities">Communities</a></h2>
 
         <ul class="communities">
-            {{- range $id, $community := .Params.communities -}}
+            {{- range $id, $community := $articles -}}
                 <li class="communities_community">
-                    <img src="/img/{{ $id }}_icon.png" class="community_icon" title="{{ $.Title }} community at {{ $id | humanize }}" style="margin-right:0.1rem;">
-                    {{ $url := (index . "url") }}
+                    <img src="/img/{{ path.Base $community.File.Dir }}_icon.png" class="community_icon" title="{{ $.Title }} community at {{ path.Base $community.File.Dir | humanize }}" style="margin-right:0.1rem;">
+                    {{ $url := $community.Params.link }}
                     {{ if not $url }}
-                        {{ $url = index . "url_onion" }}
+                        {{ $url = $community.Params.link_onion }}
                     {{ end }}
                     {{ if eq (hugo.Environment) "onion" }}
-                        <a href="{{ $url }}" referrerpolicy="no-referrer">{{ index $community "name" }}</a>
-                    {{ if not (index . "url_onion") }}
-                        <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
-                    {{ end }}
+                        <a href="{{ $url }}" referrerpolicy="no-referrer">{{ $community.Title }}</a>
+                        {{ if not $community.Params.link_onion }}
+                            <small class="clearnet_warning" title="Clearnet address!">&#9888;</small>
+                        {{ end }}
                     {{ else }}
-                    {{ if (index . "url") }}
-                    <a href="{{ $url }}" referrerpolicy="no-referrer">{{ index $community "name" }}</a>
-                    {{ else }}
-                    <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ index $community "name" }}</span>
-                    {{ end }}
+                        {{ if $community.Params.link }}
+                            <a href="{{ $url }}" referrerpolicy="no-referrer">{{ $community.Title }}</a>
+                        {{ else }}
+                            <span class="disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ $community.Title }}</span>
+                        {{ end }}
                     {{ end }}
                 </li>
             {{ end }}
