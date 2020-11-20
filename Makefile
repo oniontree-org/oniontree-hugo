@@ -8,12 +8,8 @@ HUGO = hugo -c "./content" -d "$(HUGO_OUTPUT_PATH)" --environment "$(HUGO_ENVIRO
 all:
 
 .PHONY: build
-build: build/content/index \
-		build/content/services \
-		build/content/services/index \
-		build/content/tags \
-		build/content/tags/index \
-		build/content/download
+build: build/content/services \
+	build/content/download
 	@$(HUGO)
 
 .PHONY: build/content/index
@@ -29,11 +25,6 @@ build/content/services: $(addsuffix .md,$(services))
 services/%.md:
 	@$(HUGO) new --kind service "$@"
 
-.PHONY: build/content/services/index
-build/content/services/index: services/_index.html
-services/_index.html:
-	@$(HUGO) new --kind services "$@"
-
 ##
 ### OnionTree Bookmarks
 ##
@@ -46,19 +37,6 @@ bookmarks.html:
 build/content/download: download.html
 download.html:
 	@$(HUGO) new --kind download "$@"
-
-##
-### Tags
-##
-.PHONY: build/content/tags
-build/content/tags: $(tags)
-tags/%.html:
-	@$(HUGO) new --kind tag "$@"
-
-.PHONY: build/content/tags/index
-build/content/tags/index: tags/_index.html
-tags/_index.html:
-	@$(HUGO) new --kind tags "$@"
 
 ##
 ## Miscellaneous
