@@ -22,10 +22,8 @@
     {{ end }}
 
     {{ $articles := slice }}
-    {{ range (.Site.Taxonomies.tags.Get .Params.id).Pages }}
-        {{ if eq .Type "news" }}
-            {{ $articles = $articles | append . }}
-        {{ end }}
+    {{ range where (.Site.Taxonomies.tags.Get .Params.id).Pages "Type" "news" }}
+        {{ $articles = $articles | append . }}
     {{ end }}
 
     {{ if $articles }}
