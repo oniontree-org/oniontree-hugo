@@ -8,14 +8,20 @@
 <section class="content">
     <h1>News</h1>
 
-    {{ range (.Paginate .RegularPagesRecursive).Pages }}
+    {{ range (.Paginate .Pages.ByDate.Reverse).Pages }}
+        {{ $url := .Params.link }}
+        {{ if eq (hugo.Environment) "onion" }}
+            {{ if .Params.link_onion }}
+                {{ $url = .Params.link_onion }}
+            {{ end }}
+        {{ end }}
         <div class="post-card">
             <div class="thumbnail">
                 <img src="{{ .Params.image_header | safeURL }}">
             </div>
             <div class="post-content">
-                {{ if .Params.link }}
-                <a class="title" href="{{ .Params.link }}" title="{{ index .Title | htmlEscape }}" referrerpolicy="no-referrer">{{ index .Title }}</a>
+                {{ if $url }}
+                <a class="title" href="{{ $url }}" title="{{ index .Title | htmlEscape }}" referrerpolicy="no-referrer">{{ index .Title }}</a>
                 {{ else }}
                 <span class="title disabled-onion-link" title="Onion link disabled to prevent accidental DNS leak.">{{ index .Title }}</span>
                 {{ end }}
