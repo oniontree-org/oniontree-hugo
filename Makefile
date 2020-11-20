@@ -7,6 +7,10 @@ HUGO = hugo -c "./content" -d "$(HUGO_OUTPUT_PATH)" --environment "$(HUGO_ENVIRO
 .PHONY: all
 all:
 
+.PHONY: serve
+serve:
+	@$(HUGO) serve
+
 .PHONY: build
 build: build/content/services \
 	build/content/download
