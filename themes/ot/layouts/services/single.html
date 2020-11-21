@@ -14,10 +14,12 @@
 
     {{ if .Params.tags }}
     <p id="tags">
-        Tags:
+        {{ $tags := slice }}
         {{ range (.GetTerms "tags") }}
-        <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+            {{ $tag := printf "<a href=\"%s\">%s</a>" .RelPermalink .LinkTitle }}
+            {{ $tags = $tags | append $tag }}
         {{ end }}
+        Tags: {{ delimit $tags " &middot; " }}
     </p>
     {{ end }}
 
