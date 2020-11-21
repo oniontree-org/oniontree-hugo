@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+{{- partial "head.html" . -}}
+<body>
+<header>
+    {{- partial "menu.html" . -}}
+</header>
+<section class="content">
+    <h1>Services</h1>
+
+    {{ range $i, $service := (.Paginate .Pages.ByTitle 15).Pages }}
+        {{ $communities := slice }}
+        {{ range where (.Site.Taxonomies.tags.Get $service.Params.id).Pages "Type" "communities" }}
+            {{ $communities = $communities | append . }}
+        {{ end }}
+        {{ if eq (mod $i 3) 0 }}
+            <div class="row">
+        {{ end }}
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="service-card {{ if $service.Params.is_dead }}dead{{ end }}">
+                    <div class="thumbnail">
+                        <img src="http://media.jthnx5wyvjvzsxtu.onion/static/8kun-logo/8kun-logo-color.png">
+                    </div>
+                    <div class="content">
+                        <a class="title" href="{{ $service.RelPermalink }}">{{ $service.Title }}</a>
+                        <div class="tags">
+                            {{ $tags := slice }}
+                            {{ range (.GetTerms "tags") }}
+                                {{ $tag := printf "<a href=\"%s\">%s</a>" .RelPermalink .LinkTitle }}
+                                {{ $tags = $tags | append $tag }}
+                            {{ end }}
+                            {{ delimit $tags " &middot; " }}
+                        </div>
+                        {{ if $communities }}
+                            <div class="communities">
+                                {{ range $id, $community := $communities }}
+                                <a href="{{ $service.RelPermalink }}#communities"><img src="/img/{{ path.Base $community.File.Dir }}_icon.png" class="community_icon" title="{{ $service.Title }} community at {{ path.Base $community.File.Dir | humanize }}"></a>
+                                {{ end }}
+                            </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+        {{ if eq (mod (add $i 1) 3) 0 }}
+            </div>
+        {{ end }}
+    {{ end }}
+
+    <ul>
+        <li>
+            {{ if .Paginator.HasPrev }}
+            <a href="{{ .Paginator.Prev.URL }}">newer</a>
+            {{ end }}
+        </li>
+
+        <li>
+            {{ if .Paginator.HasNext }}
+            <a href="{{ .Paginator.Next.URL }}">older</a>
+            {{ end }}
+        </li>
+    </ul>
+</section>
+<footer>
+    {{- partial "footer.html" . -}}
+</footer>
+</body>
+</html>

@@ -273,3 +273,66 @@ pre {
     margin: 1em 0 0;
     color: #999999;
 }
+
+.service-card {
+    position: relative;
+    display: block;
+    text-align:center;
+    background: #FFFFFF;
+    min-height: 19em;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+    margin: 2em 0;
+}
+
+.service-card .thumbnail {
+    height:18em;
+    overflow: hidden;
+    padding-top:1em;
+
+}
+
+.service-card .thumbnail img {
+    display: block;
+    width: 100%;
+}
+
+.service-card.dead {
+    filter:grayscale(90%);
+}
+
+.service-card .content {
+    position: absolute;
+    bottom: 0;
+    background: #FFFFFF;
+    width: 100%;
+    padding: 1em;
+    text-align:center;
+    -webkti-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.service-card .content .title {
+    margin: 0;
+    line-height: 1.5em;
+    font-size: 1.3em;
+}
+
+.service-card .content .tags {
+    margin: 1em 0 0;
+    font-size:0.9em;
+}
+
+.service-card .content .tags a {
+    color:inherit;
+}
+
+.service-card .content .communities {
+    margin: 1em 0 0;
+}
+
+.service-card .content .communities a {
+    padding:0.2em;
+}
