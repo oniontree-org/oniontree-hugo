@@ -29,4 +29,5 @@ date: {{ .Date }}
 {{ dict "urls" (index $service "urls" | default slice) | transform.Remarshal "yaml" -}}
 {{ dict "public_keys" (index $service "public_keys" | default slice) | transform.Remarshal "yaml" -}}
 {{ dict "tags" ($tags | default slice) | transform.Remarshal "yaml" -}}
+{{ dict "is_dead" (in $tags "dead") | transform.Remarshal "yaml" -}}
 ---
